@@ -1,6 +1,5 @@
 // write your code here
 let addRamen = false;
-
 const url = 'http://localhost:3000';
 
 const addNewRamen = () => {
@@ -20,7 +19,7 @@ const fetchImages = () => {
     fetch(url)
         .then(resp => resp.json())
         .then(json => {
-            makeRamenPhotos(json)
+            renderRamenImages(json)
             console.log(json)
         })
 }
@@ -33,38 +32,43 @@ const renderRamenImages = (ramens) => {
 }
 
 const listenForFormSubmit = () => {
-    const form = document.querySelector('ramen-detail')
+    const form = document.querySelector('.add-ramen-form')
     form.addEventListener('submit', e => {
         e.preventDefault();
         const ramenName = e.target[0].value;
         const ramenRestaurantName = e.target[1].value;
 
         const newRamen = {
-            name: ramens.name,
-            restaurantName: ramens.restaurant,
-            image: ramens.image,
-            rating: ramens.rating,
-            comment: ramens.comment,
+            name: ramenName,
+            restaurantName: ramenRestaurantName
         };
     })
 }
 
 const makeRamenCard = ramen => {
-   const ramenCard = document.createElement('div')
-   const ramenName = document.createElement('h2')
-   const ramenImage = document.createElement('img')
-   const ramenRating = document.createElement('rating-display')
-   const ramenComment = document.createElement('comment-display')
+    const ramenCard = document.createElement('div')
+    const ramenName = document.createElement('h2')
+    const ramenImage = document.createElement('img')
+    const ramenRating = document.createElement('rating-display')
+    const ramenComment = document.createElement('comment-display')
 
-   ramenCard.className = 'card'
-   ramenImage.className = 'ramen-image'
-   ramenName.textContent = ramen.name,
-   ramenRestaurant.textContent = ramen.restaurantName,
-   ramenImage.src = ramen.image,
-   ramenRating.textContent = ramen.rating,
-   ramenComment.textContent = ramen.comment
+    ramenCard.className = 'card'
+    ramenImage.className = 'ramen-image'
+    ramenName.textContent = ramen.name,
+        ramenRestaurant.textContent = ramen.restaurantName,
+        ramenImage.src = ramen.image,
+        ramenRating.textContent = ramen.rating,
+        ramenComment.textContent = ramen.comment
 
-   ramenCard.append(ramenName, ramenRestaurantName, ramenRating, ramenComment);
-   const ramenCollection = document.getElementById('ramen-menu')
-   ramenCollection.append(ramenCard)
-}   
+    ramenCard.append(ramenName, ramenRestaurantName, ramenRating, ramenComment);
+    const ramenCollection = document.getElementById('ramen-menu')
+    ramenCollection.append(ramenCard)
+}
+
+const init = () => {
+    addNewRamen();
+    fetchImages();
+    listenForFormSubmit();
+}
+
+init();
